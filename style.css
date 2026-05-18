@@ -1,0 +1,150 @@
+:root {
+    --border: #d9d9d9;
+    --muted: #757575;
+    --surface: #ffffff;
+    --surface-2: #f7f7f7;
+    --shadow: rgba(23, 23, 23, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, Segoe UI, Arial, sans-serif;
+    background: #fafafa;
+    color: #222;
+}
+
+.page {
+    max-width: 980px;
+    margin: 36px auto;
+    padding: 24px;
+}
+
+.topbar,
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.topbar h1,
+footer strong {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button,
+input {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+button {
+    border: none;
+    background: #444;
+    color: #fff;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+input {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    width: 220px;
+}
+
+.card {
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid #ebebeb;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px var(--shadow);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+}
+
+th {
+    background: var(--surface-2);
+    font-weight: 600;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.mysql {
+    margin-top: 18px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-2);
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.footer-links,
+.socials {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.footer-links a,
+.socials a {
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.socials svg {
+    width: 18px;
+    height: 18px;
+    fill: #666;
+}
+
+footer {
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+    .topbar,
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    input {
+        width: 140px;
+    }
+}
