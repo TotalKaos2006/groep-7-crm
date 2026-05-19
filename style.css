@@ -1,0 +1,278 @@
+body {
+    background: #135f8b;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    background: #2f8dc4;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 60px;
+}
+
+.nav-buttons a {
+    background-color: rgb(19, 95, 139);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 20px;
+    margin-left: 40px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid rgb(250, 170, 0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-buttons.active {
+    background-color: rgb(25, 110, 160);
+    color: rgb(250, 170, 0);
+}
+
+.nav-buttons a:hover {
+    background-color: rgb(25, 110, 160);
+    color: rgb(250, 170, 0);
+}
+
+.navbar {
+    text-align: center;
+    margin: 20px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.container {
+    flex: 1;
+    min-height: 0;
+    /* cruciaal voor scrollen in flexbox */
+    overflow-y: auto;
+    width: 80%;
+    margin: 15px auto;
+    /* ruimte boven en onder */
+    padding-bottom: 20px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #dedede;
+    border-radius: 12px;
+    border: 3px solid #000000;
+    color: black;
+}
+
+table {
+    width: 100%;
+}
+
+td,
+th {
+    padding: 10px;
+    text-align: center;
+}
+
+button {
+    padding: 6px 10px;
+    margin: 2px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #135f8b;
+    color: white;
+    padding: 30px;
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal button {
+    width: 48%;
+}
+
+.modal select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+.modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+
+footer {
+    flex-shrink: 0;
+    height: 40px;
+    background-color: #2f8dc4;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+input[type="text"] {
+    background-color: white;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    width: 300px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+input[type="text"]:hover {
+    background-color: rgba(243, 243, 243, 0.85);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    cursor: text;
+}
+
+input::placeholder {
+    color: rgb(190, 189, 189);
+    opacity: 1;
+}
+
+img {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.edit {
+    color: blue;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid blue;
+}
+
+.delete {
+    color: red;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid red;
+}
+
+.extra {
+    color: orange;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid orange;
+}
+
+.uren {
+    color: red;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid red;
+    display: inline-block;
+    padding: 2px 8px;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+}
+
+.toevoegen {
+    color: green;
+    font-weight: bold;
+    border-radius: 8px;
+    height: 50px;
+    width: 50px;
+    border: 3px solid green;
+    font-size: 20PX;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border: 1px solid rgb(114, 114, 114);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-center {
+    flex: 1;
+    text-align: center;
+}
+
+.navbar-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.index-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/*
+.nav-buttons a {
+    background-color: rgb(19, 95, 139);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 20px;
+    margin-left: 40px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid rgb(250, 170, 0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+.nav-buttons a:hover {
+    background-color: rgb(25, 110, 160);
+    color: rgb(250, 170, 0);
+}
