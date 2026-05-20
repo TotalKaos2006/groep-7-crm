@@ -58,15 +58,12 @@ $data = $stmt->fetchAll();
 <body>
 
     <header>
-        <img src="../Miscellaneous/klokker.png" height="100">
         <div class="nav-buttons">
             <a href="index.php">Home</a>
             <a href="projecten.php">Projecten</a>
             <a href="uren.php">Uren</a>
-            <a class="nav-buttons active" href="medewerkers.php">Medewerkers</a>
+            <a class="nav-buttons active" href="#">Medewerkers</a>
             <a href="klanten.php">Klanten</a>
-            <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
-                document</a>
         </div>
     </header>
 
@@ -149,7 +146,8 @@ $data = $stmt->fetchAll();
         </form>
     </div>
 
-    <footer>© 2026</footer>
+    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document - </a> </p> </footer>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>

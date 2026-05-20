@@ -1,44 +1,44 @@
 body {
-    background: #135f8b;
-    color: white;
+    background: rgb(52, 180, 255);
+    color: rgb(0, 0, 0);
     font-family: sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-image: linear-gradient(rgb(83, 83, 83),  rgb(143, 143, 143), rgb(203, 203, 203));
 }
 
 header {
-    background: #2f8dc4;
     padding: 10px;
     display: flex;
+    justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    height: 60px;
+    height: 100px;
 }
 
 .nav-buttons a {
-    background-color: rgb(19, 95, 139);
-    color: white;
+    background-color: rgb(134, 134, 134);
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     margin: 0 20px;
     margin-left: 40px;
     font-size: 16px;
     border-radius: 12px;
-    border: 2px solid rgb(250, 170, 0);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     text-decoration: none;
     display: inline-block;
 }
 
 .nav-buttons.active {
-    background-color: rgb(25, 110, 160);
-    color: rgb(250, 170, 0);
+    background-color: rgb(185, 185, 185);
+    color: rgb(0, 0, 0);
 }
 
 .nav-buttons a:hover {
-    background-color: rgb(25, 110, 160);
-    color: rgb(250, 170, 0);
+    background-color: rgb(185, 185, 185);
+    color: rgb(0, 0, 0);
 }
 
 .navbar {
@@ -51,21 +51,24 @@ input {
     border-radius: 10px;
 }
 
+html {
+  scrollbar-color: rgb(78, 78, 78) transparent;
+}
+
 .container {
-    flex: 1;
-    min-height: 0;
-    /* cruciaal voor scrollen in flexbox */
+    flex: 0,5;
+    min-height: 0;        /* cruciaal voor scrollen in flexbox */
     overflow-y: auto;
     width: 80%;
-    margin: 15px auto;
-    /* ruimte boven en onder */
-    padding-bottom: 20px;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: #dedede;
+    margin: 16px auto;    
+    margin-bottom: 40px;
+    padding-bottom: 8px;
+    padding-top: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: rgb(190, 190, 190);
     border-radius: 12px;
-    border: 3px solid #000000;
+    border: 2px solid #000000;
     color: black;
 }
 
@@ -122,7 +125,7 @@ button {
     background-color: white;
     color: black;
     font-size: 14px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
 }
 
 .modal textarea {
@@ -133,14 +136,13 @@ button {
     background-color: white;
     color: black;
     font-size: 14px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     resize: none;
 }
 
 footer {
     flex-shrink: 0;
-    height: 40px;
-    background-color: #2f8dc4;
+    height: 15px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -149,23 +151,24 @@ footer {
 
 
 input[type="text"] {
-    background-color: white;
-    color: rgb(0, 0, 0);
+    background-color: rgb(185, 185, 185);
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     width: 300px;
     font-size: 16px;
     border-radius: 12px;
     border: 2px solid rgb(0, 0, 0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
 input[type="text"]:hover {
-    background-color: rgba(243, 243, 243, 0.85);
+    background-color: rgba(185, 185, 185);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     cursor: text;
 }
 
 input::placeholder {
-    color: rgb(190, 189, 189);
+    color: rgb(0, 0, 0);
     opacity: 1;
 }
 
@@ -175,45 +178,32 @@ img {
 }
 
 .edit {
-    color: blue;
+    color: rgb(0, 0, 255);
     font-weight: bold;
     border-radius: 8px;
-    border: 2px solid blue;
+    border: 2px solid rgb(0, 0, 255);
 }
 
 .delete {
-    color: red;
+    color: rgb(255, 0, 0);
     font-weight: bold;
     border-radius: 8px;
-    border: 2px solid red;
-}
-
-.extra {
-    color: orange;
-    font-weight: bold;
-    border-radius: 8px;
-    border: 2px solid orange;
+    border: 2px solid rgb(255, 0, 0);
 }
 
 .uren {
-    color: red;
+    color:rgb(255, 153, 0);
     font-weight: bold;
     border-radius: 8px;
-    border: 2px solid red;
-    display: inline-block;
-    padding: 2px 8px;
-    text-decoration: none;
-    background: none;
-    cursor: pointer;
+    border: 2px solid rgb(255, 153, 0);
 }
-
 .toevoegen {
-    color: green;
+    color: rgb(0, 0, 0);
     font-weight: bold;
     border-radius: 8px;
     height: 50px;
     width: 50px;
-    border: 3px solid green;
+    border: 2px solid rgb(0, 0, 0);
     font-size: 20PX;
     text-align: center;
 }
@@ -249,13 +239,12 @@ tr {
     gap: 10px;
 }
 
-.index-footer {
+    .index-footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-}
-
+    }
 /*
 .nav-buttons a {
     background-color: rgb(19, 95, 139);
