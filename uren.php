@@ -23,6 +23,8 @@ $allProjecten = $pdo->query(
 // ── Project-filter ophalen uit de URL ────────────────────────────────────
 $filterProjectId = isset($_GET['project_id']) ? (int) $_GET['project_id'] : 0;
 $isMedewerker = $_SESSION['rol'] === 'medewerker';
+$user_id = $_SESSION['user_id'];
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
@@ -40,22 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($action === 'edit') {
-        $pdo->prepare(
-            "UPDATE gewerkte_uren
-             SET project_id=?, medewerker_id=?, uren=?, omschrijving=?
-             WHERE uren_id=?"
-        )->execute([
-                    (int) $_POST['project_id'],
-                    (int) $_POST['medewerker_id'],
-                    (float) str_replace(',', '.', $_POST['uren']),
-                    trim($_POST['omschrijving'] ?? ''),
-                    (int) $_POST['uren_id'],
-                ]);
+        if ($isMedewerker) {
+            $check = $pdo->prepare("SELECT medewerker_id FROM gewerkte_uren WHERE uren_id = ?");
+            $check->execute([(int) $_POST['uren_id']]);
+            if ($check->fetchColumn() != $user_id) {
+                header('Location: uren.php');
+                exit;
+            }
+        }
+        $medewerker_id = $isMedewerker ? $user_id : (int) $_POST['medewerker_id'];
+        $pdo->prepare("UPDATE gewerkte_uren SET project_id=?, medewerker_id=?, uren=?, omschrijving=? WHERE uren_id=?")
+            ->execute([(int) $_POST['project_id'], $medewerker_id, (float) str_replace(',', '.', $_POST['uren']), trim($_POST['omschrijving'] ?? ''), (int) $_POST['uren_id']]);
     }
 
     if ($action === 'delete') {
-        $pdo->prepare("DELETE FROM gewerkte_uren WHERE uren_id=?")
-            ->execute([(int) $_POST['uren_id']]);
+        if ($isMedewerker) {
+            $check = $pdo->prepare("SELECT medewerker_id FROM gewerkte_uren WHERE uren_id = ?");
+            $check->execute([(int) $_POST['uren_id']]);
+            if ($check->fetchColumn() != $user_id) {
+                header('Location: uren.php');
+                exit;
+            }
+        }
+        $pdo->prepare("DELETE FROM gewerkte_uren WHERE uren_id=?")->execute([(int) $_POST['uren_id']]);
     }
 
     header('Location: uren.php' . ($filterProjectId ? "?project_id={$filterProjectId}" : ''));
@@ -197,14 +206,18 @@ $totalUren = array_sum(array_column($data, 'uren'));
         <form method="post">
             <input type="hidden" name="action" value="add">
 
-            <select name="medewerker_id" class="smart-select" required>
-                <option value="">-- Selecteer medewerker --</option>
-                <?php foreach ($allMedewerkers as $m): ?>
-                    <option value="<?= $m['medewerker_id'] ?>">
-                        <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select><br>
+            <?php if ($isMedewerker): ?>
+                <input type="hidden" name="medewerker_id" value="<?= $user_id ?>">
+            <?php else: ?>
+                <select name="medewerker_id" class="smart-select" required>
+                    <option value="">-- Selecteer medewerker --</option>
+                    <?php foreach ($allMedewerkers as $m): ?>
+                        <option value="<?= $m['medewerker_id'] ?>">
+                            <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select><br>
+            <?php endif; ?>
 
             <select name="project_id" class="smart-select" required>
                 <option value="">-- Selecteer project --</option>
@@ -230,14 +243,18 @@ $totalUren = array_sum(array_column($data, 'uren'));
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="uren_id" id="edit_id">
 
-            <select name="medewerker_id" id="edit_medewerker_id" class="smart-select" required>
-                <option value="">-- Selecteer medewerker --</option>
-                <?php foreach ($allMedewerkers as $m): ?>
-                    <option value="<?= $m['medewerker_id'] ?>">
-                        <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select><br>
+            <?php if ($isMedewerker): ?>
+                <input type="hidden" name="medewerker_id" value="<?= $user_id ?>">
+            <?php else: ?>
+                <select name="medewerker_id" id="edit_medewerker_id" class="smart-select" required>
+                    <option value="">-- Selecteer medewerker --</option>
+                    <?php foreach ($allMedewerkers as $m): ?>
+                        <option value="<?= $m['medewerker_id'] ?>">
+                            <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select><br>
+            <?php endif; ?>
 
             <select name="project_id" id="edit_project_id" class="smart-select" required>
                 <option value="">-- Selecteer project --</option>
@@ -272,10 +289,11 @@ $totalUren = array_sum(array_column($data, 'uren'));
 
         function edit(d) {
             document.getElementById('edit_id').value = d.uren_id;
-            document.getElementById('edit_medewerker_id').value = d.medewerker_id;
             document.getElementById('edit_project_id').value = d.project_id;
             document.getElementById('edit_uren').value = d.uren;
             document.getElementById('edit_omschrijving').value = d.omschrijving || '';
+            const medEl = document.getElementById('edit_medewerker_id');
+            if (medEl) medEl.value = d.medewerker_id; // ← alleen invullen als het bestaat
             openModal('editModal');
         }
 

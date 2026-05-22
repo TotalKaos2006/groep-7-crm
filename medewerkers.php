@@ -12,37 +12,56 @@ if ($_SESSION['rol'] === 'medewerker') {
     exit;
 }
 
-
-$message = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'add') {
-        $pdo->prepare("INSERT INTO medewerkers (naam, achternaam, email, functie)
-        VALUES (?, ?, ?, ?)")->execute([
-                    $_POST['naam'],
-                    $_POST['achternaam'],
-                    $_POST['email'],
-                    $_POST['functie']
-                ]);
+        $hash = password_hash($_POST['wachtwoord'], PASSWORD_BCRYPT);
+        $pdo->prepare("INSERT INTO medewerkers (naam, achternaam, email, functie, wachtwoord, rol, actief)
+            VALUES (?, ?, ?, ?, ?, ?, 1)")->execute([
+            $_POST['naam'],
+            $_POST['achternaam'],
+            $_POST['email'],
+            $_POST['functie'],
+            $hash,
+            $_POST['rol']
+        ]);
     }
 
     if ($action === 'edit') {
-        $pdo->prepare("UPDATE medewerkers SET naam=?, achternaam=?, email=?, functie=? WHERE medewerker_id=?")
-            ->execute([
-                $_POST['naam'],
-                $_POST['achternaam'],
-                $_POST['email'],
-                $_POST['functie'],
-                $_POST['medewerker_id']
-            ]);
+        // Wachtwoord alleen updaten als er iets is ingevuld
+        if (!empty($_POST['wachtwoord'])) {
+            $hash = password_hash($_POST['wachtwoord'], PASSWORD_BCRYPT);
+            $pdo->prepare("UPDATE medewerkers SET naam=?, achternaam=?, email=?, functie=?, rol=?, wachtwoord=? WHERE medewerker_id=?")
+                ->execute([
+                    $_POST['naam'],
+                    $_POST['achternaam'],
+                    $_POST['email'],
+                    $_POST['functie'],
+                    $_POST['rol'],
+                    $hash,
+                    $_POST['medewerker_id']
+                ]);
+        } else {
+            $pdo->prepare("UPDATE medewerkers SET naam=?, achternaam=?, email=?, functie=?, rol=? WHERE medewerker_id=?")
+                ->execute([
+                    $_POST['naam'],
+                    $_POST['achternaam'],
+                    $_POST['email'],
+                    $_POST['functie'],
+                    $_POST['rol'],
+                    $_POST['medewerker_id']
+                ]);
+        }
     }
 
     if ($action === 'delete') {
         $pdo->prepare("DELETE FROM medewerkers WHERE medewerker_id=?")
             ->execute([$_POST['medewerker_id']]);
     }
+
+    header('Location: medewerkers.php');
+    exit;
 }
 
 $search = $_GET['search'] ?? '';
@@ -90,7 +109,7 @@ $data = $stmt->fetchAll();
             <div class="navbar-left"></div>
             <div class="navbar-center">
                 <form method="get">
-                    <input type="text" name="search" placeholder="Zoeken..." value="<?= $search ?>">
+                    <input type="text" name="search" placeholder="Zoeken..." value="<?= htmlspecialchars($search) ?>">
                 </form>
             </div>
             <div class="navbar-actions">
@@ -98,6 +117,7 @@ $data = $stmt->fetchAll();
                 <button class="toevoegen" onclick="exportPDF()">🖨️</button>
             </div>
         </div>
+
         <table id="mainTable">
             <tr>
                 <th>ID</th>
@@ -105,16 +125,18 @@ $data = $stmt->fetchAll();
                 <th>Achternaam</th>
                 <th>Email</th>
                 <th>Functie</th>
+                <th>Rol</th>
                 <th>Acties</th>
             </tr>
 
             <?php foreach ($data as $r): ?>
                 <tr>
                     <td><?= $r['medewerker_id'] ?></td>
-                    <td><?= $r['naam'] ?></td>
-                    <td><?= $r['achternaam'] ?></td>
-                    <td><?= $r['email'] ?></td>
-                    <td><?= $r['functie'] ?></td>
+                    <td><?= htmlspecialchars($r['naam']) ?></td>
+                    <td><?= htmlspecialchars($r['achternaam']) ?></td>
+                    <td><?= htmlspecialchars($r['email']) ?></td>
+                    <td><?= htmlspecialchars($r['functie']) ?></td>
+                    <td><?= htmlspecialchars($r['rol']) ?></td>
                     <td>
                         <button class="edit" onclick='edit(<?= json_encode($r) ?>)'>Edit</button>
                         <form method="post" style="display:inline" onsubmit="return confirm('Verwijderen?')">
@@ -125,47 +147,62 @@ $data = $stmt->fetchAll();
                     </td>
                 </tr>
             <?php endforeach; ?>
-
         </table>
     </div>
 
+    <!-- Modal: Toevoegen -->
     <div id="addModal" class="modal">
         <form method="post">
             <input type="hidden" name="action" value="add">
-            <input name="naam" placeholder="Naam"><br>
-            <input name="achternaam" placeholder="Achternaam"><br>
-            <input name="email" placeholder="Email"><br>
+            <input name="naam" placeholder="Naam" required><br>
+            <input name="achternaam" placeholder="Achternaam" required><br>
+            <input name="email" type="email" placeholder="Email" required><br>
             <select name="functie">
                 <option value="">-- Kies een functie --</option>
                 <option value="IT">IT</option>
                 <option value="SD">SD</option>
-            </select>
-            <br>
+            </select><br>
+            <select name="rol" required>
+                <option value="">-- Kies een rol --</option>
+                <option value="medewerker">Medewerker</option>
+                <option value="verkoop">Verkoop</option>
+                <option value="afdelingshoofd">Afdelingshoofd</option>
+            </select><br>
+            <input name="wachtwoord" type="password" placeholder="Wachtwoord" required><br>
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('addModal')">Sluiten</button>
         </form>
     </div>
 
+    <!-- Modal: Bewerken -->
     <div id="editModal" class="modal">
         <form method="post">
             <input type="hidden" name="action" value="edit">
-            <input type="hidden" name="medewerker_id" id="id">
-            <input name="naam" id="naam" placeholder="Naam"><br>
-            <input name="achternaam" id="achternaam" placeholder="Achternaam"><br>
-            <input name="email" id="email" placeholder="Email"><br>
-            <select name="functie" id="functie">
+            <input type="hidden" name="medewerker_id" id="edit_id">
+            <input name="naam" id="edit_naam" placeholder="Naam" required><br>
+            <input name="achternaam" id="edit_achternaam" placeholder="Achternaam" required><br>
+            <input name="email" id="edit_email" type="email" placeholder="Email" required><br>
+            <select name="functie" id="edit_functie">
                 <option value="">-- Kies een functie --</option>
                 <option value="IT">IT</option>
                 <option value="SD">SD</option>
-            </select>
-            <br>
+            </select><br>
+            <select name="rol" id="edit_rol" required>
+                <option value="">-- Kies een rol --</option>
+                <option value="medewerker">Medewerker</option>
+                <option value="verkoop">Verkoop</option>
+                <option value="afdelingshoofd">Afdelingshoofd</option>
+            </select><br>
+            <!-- Leeg laten = wachtwoord blijft hetzelfde -->
+            <input name="wachtwoord" id="edit_wachtwoord" type="password" placeholder="Nieuw wachtwoord (leeg = niet wijzigen)"><br>
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('editModal')">Sluiten</button>
         </form>
     </div>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document - </a> </p> </footer>
-
+    <footer class="index-footer">
+        <p>© 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a></p>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -175,11 +212,13 @@ $data = $stmt->fetchAll();
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function edit(d) {
-            document.getElementById('id').value = d.medewerker_id;
-            document.getElementById('naam').value = d.naam;
-            document.getElementById('achternaam').value = d.achternaam;
-            document.getElementById('email').value = d.email;
-            document.getElementById('functie').value = d.functie;
+            document.getElementById('edit_id').value = d.medewerker_id;
+            document.getElementById('edit_naam').value = d.naam;
+            document.getElementById('edit_achternaam').value = d.achternaam;
+            document.getElementById('edit_email').value = d.email;
+            document.getElementById('edit_functie').value = d.functie;
+            document.getElementById('edit_rol').value = d.rol;
+            document.getElementById('edit_wachtwoord').value = ''; // altijd leeg laten
             openModal('editModal');
         }
 
@@ -194,18 +233,19 @@ $data = $stmt->fetchAll();
             const rows = [];
             document.querySelectorAll('#mainTable tr').forEach(tr => {
                 const c = tr.querySelectorAll('td');
-                if (c.length >= 5)
+                if (c.length >= 6)
                     rows.push([
                         c[0].textContent.trim(),
                         c[1].textContent.trim(),
                         c[2].textContent.trim(),
                         c[3].textContent.trim(),
-                        c[4].textContent.trim()
+                        c[4].textContent.trim(),
+                        c[5].textContent.trim()
                     ]);
             });
 
             doc.autoTable({
-                head: [['ID', 'Naam', 'Achternaam', 'Email', 'Functie']],
+                head: [['ID', 'Naam', 'Achternaam', 'Email', 'Functie', 'Rol']],
                 body: rows,
                 startY: 27,
                 styles: { fontSize: 10 },
