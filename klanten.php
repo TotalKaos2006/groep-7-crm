@@ -1,5 +1,17 @@
 <?php
+session_start();
 require_once 'db.php';
+
+if (empty($_SESSION['user_id'])) {
+    header('Location: auth/login.php');
+    exit;
+}
+
+if ($_SESSION['rol'] === 'medewerker') {
+    header('Location: uren.php');
+    exit;
+}
+
 
 $message = '';
 
@@ -11,11 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "INSERT INTO klanten (naam, achternaam, email, telefoonnummer)
              VALUES (?, ?, ?, ?)"
         )->execute([
-            trim($_POST['naam']),
-            trim($_POST['achternaam']),
-            trim($_POST['email']),
-            trim($_POST['telefoonnummer']),
-        ]);
+                    trim($_POST['naam']),
+                    trim($_POST['achternaam']),
+                    trim($_POST['email']),
+                    trim($_POST['telefoonnummer']),
+                ]);
     }
 
     if ($action === 'edit') {
@@ -24,17 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              SET naam=?, achternaam=?, email=?, telefoonnummer=?
              WHERE klant_id=?"
         )->execute([
-            trim($_POST['naam']),
-            trim($_POST['achternaam']),
-            trim($_POST['email']),
-            trim($_POST['telefoonnummer']),
-            (int)$_POST['klant_id'],
-        ]);
+                    trim($_POST['naam']),
+                    trim($_POST['achternaam']),
+                    trim($_POST['email']),
+                    trim($_POST['telefoonnummer']),
+                    (int) $_POST['klant_id'],
+                ]);
     }
 
     if ($action === 'delete') {
         $pdo->prepare("DELETE FROM klanten WHERE klant_id=?")
-            ->execute([(int)$_POST['klant_id']]);
+            ->execute([(int) $_POST['klant_id']]);
     }
 }
 
@@ -72,6 +84,12 @@ $data = $stmt->fetchAll();
             <a href="uren.php">Uren</a>
             <a href="medewerkers.php">Medewerkers</a>
             <a class="nav-buttons active" href="#">Klanten</a>
+        </div>
+        <div class="user-info">
+            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            (<?= htmlspecialchars($_SESSION['rol']) ?>)
+            &nbsp;|&nbsp;
+            <a href="auth/logout.php">Uitloggen</a>
         </div>
     </header>
 
@@ -112,7 +130,8 @@ $data = $stmt->fetchAll();
                             <input type="hidden" name="klant_id" value="<?= $r['klant_id'] ?>">
                             <button class="delete">Delete</button>
                         </form>
-                        <button class="uren" onclick="location.href='projecten.php?klant_id=<?= $r['klant_id'] ?>'">Projecten</button>
+                        <button class="uren"
+                            onclick="location.href='projecten.php?klant_id=<?= $r['klant_id'] ?>'">Projecten</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -149,22 +168,25 @@ $data = $stmt->fetchAll();
         </form>
     </div>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document - </a> </p> </footer>
+    <footer class="index-footer">
+        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
+                document - </a> </p>
+    </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
     <script>
-        function openModal(id)  { document.getElementById(id).style.display = 'block'; }
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function edit(d) {
-            document.getElementById('edit_id').value          = d.klant_id;
-            document.getElementById('edit_naam').value         = d.naam;
-            document.getElementById('edit_achternaam').value   = d.achternaam;
-            document.getElementById('edit_email').value        = d.email;
-            document.getElementById('edit_telefoon').value     = d.telefoonnummer;
+            document.getElementById('edit_id').value = d.klant_id;
+            document.getElementById('edit_naam').value = d.naam;
+            document.getElementById('edit_achternaam').value = d.achternaam;
+            document.getElementById('edit_email').value = d.email;
+            document.getElementById('edit_telefoon').value = d.telefoonnummer;
             openModal('editModal');
         }
 

@@ -1,11 +1,19 @@
 <?php
+session_start();
 require_once 'db.php';
+
+if (empty($_SESSION['user_id'])) {
+    header('Location: auth/login.php');
+    exit;
+}
 
 $message = '';
 
 // ── Dropdowndata ophalen voor de modals ──────────────────────────────────
 $allMedewerkers = $pdo->query(
-    "SELECT medewerker_id, naam, achternaam FROM medewerkers ORDER BY naam"
+    "SELECT medewerker_id, naam, achternaam 
+     FROM medewerkers 
+     ORDER BY achternaam ASC, naam ASC"
 )->fetchAll();
 
 $allProjecten = $pdo->query(
@@ -13,7 +21,8 @@ $allProjecten = $pdo->query(
 )->fetchAll();
 
 // ── Project-filter ophalen uit de URL ────────────────────────────────────
-$filterProjectId = isset($_GET['project_id']) ? (int)$_GET['project_id'] : 0;
+$filterProjectId = isset($_GET['project_id']) ? (int) $_GET['project_id'] : 0;
+$isMedewerker = $_SESSION['rol'] === 'medewerker';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
@@ -23,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "INSERT INTO gewerkte_uren (project_id, medewerker_id, uren, omschrijving)
              VALUES (?, ?, ?, ?)"
         )->execute([
-            (int)$_POST['project_id'],
-            (int)$_POST['medewerker_id'],
-            (float)str_replace(',', '.', $_POST['uren']),
-            trim($_POST['omschrijving'] ?? ''),
-        ]);
+                    (int) $_POST['project_id'],
+                    (int) $_POST['medewerker_id'],
+                    (float) str_replace(',', '.', $_POST['uren']),
+                    trim($_POST['omschrijving'] ?? ''),
+                ]);
     }
 
     if ($action === 'edit') {
@@ -36,17 +45,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              SET project_id=?, medewerker_id=?, uren=?, omschrijving=?
              WHERE uren_id=?"
         )->execute([
-            (int)$_POST['project_id'],
-            (int)$_POST['medewerker_id'],
-            (float)str_replace(',', '.', $_POST['uren']),
-            trim($_POST['omschrijving'] ?? ''),
-            (int)$_POST['uren_id'],
-        ]);
+                    (int) $_POST['project_id'],
+                    (int) $_POST['medewerker_id'],
+                    (float) str_replace(',', '.', $_POST['uren']),
+                    trim($_POST['omschrijving'] ?? ''),
+                    (int) $_POST['uren_id'],
+                ]);
     }
 
     if ($action === 'delete') {
         $pdo->prepare("DELETE FROM gewerkte_uren WHERE uren_id=?")
-            ->execute([(int)$_POST['uren_id']]);
+            ->execute([(int) $_POST['uren_id']]);
     }
 
     header('Location: uren.php' . ($filterProjectId ? "?project_id={$filterProjectId}" : ''));
@@ -54,22 +63,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // ── Data ophalen ─────────────────────────────────────────────────────────
-$search     = $_GET['search'] ?? '';
+$search = $_GET['search'] ?? '';
 $conditions = [];
-$params     = [];
+$params = [];
+
+// Medewerker ziet alleen eigen uren
+if ($isMedewerker) {
+    $conditions[] = 'gu.medewerker_id = ?';
+    $params[] = $user_id = $_SESSION['user_id'];
+}
 
 if ($filterProjectId) {
     $conditions[] = 'gu.project_id = ?';
-    $params[]     = $filterProjectId;
+    $params[] = $filterProjectId;
 }
 
 if ($search) {
-    $like         = "%$search%";
+    $like = "%$search%";
     $conditions[] = '(m.naam LIKE ? OR m.achternaam LIKE ? OR p.projectnaam LIKE ? OR gu.omschrijving LIKE ?)';
-    $params[]     = $like;
-    $params[]     = $like;
-    $params[]     = $like;
-    $params[]     = $like;
+    $params[] = $like;
+    $params[] = $like;
+    $params[] = $like;
+    $params[] = $like;
 }
 
 $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
@@ -103,13 +118,21 @@ $totalUren = array_sum(array_column($data, 'uren'));
 <body>
 
     <header>
-
         <div class="nav-buttons">
             <a href="index.php">Home</a>
-            <a href="projecten.php">Projecten</a>
-            <a class="nav-buttons active" href="#">Uren</a>
-            <a href="medewerkers.php">Medewerkers</a>
-            <a href="klanten.php">Klanten</a>
+
+            <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
+                <a href="projecten.php">Projecten</a>
+                <a href="medewerkers.php">Medewerkers</a>
+                <a href="klanten.php">Klanten</a>
+            <?php endif; ?>
+
+            <a href="uren.php">Uren</a>
+        </div>
+        <div class="user-info">
+            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            (<?= htmlspecialchars($_SESSION['rol']) ?>)
+            | <a href="auth/logout.php">Uitloggen</a>
         </div>
     </header>
 
@@ -145,7 +168,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
                     <td><?= $r['uren_id'] ?></td>
                     <td><?= htmlspecialchars($r['medewerker_naam']) ?></td>
                     <td><?= htmlspecialchars($r['projectnaam']) ?></td>
-                    <td><?= number_format((float)$r['uren'], 2, ',', '.') ?></td>
+                    <td><?= number_format((float) $r['uren'], 2, ',', '.') ?></td>
                     <td><?= htmlspecialchars($r['omschrijving']) ?></td>
                     <td>
                         <button class="edit" onclick='edit(<?= json_encode($r) ?>)'>Edit</button>
@@ -174,27 +197,25 @@ $totalUren = array_sum(array_column($data, 'uren'));
         <form method="post">
             <input type="hidden" name="action" value="add">
 
-            <select name="medewerker_id" required>
+            <select name="medewerker_id" class="smart-select" required>
                 <option value="">-- Selecteer medewerker --</option>
                 <?php foreach ($allMedewerkers as $m): ?>
                     <option value="<?= $m['medewerker_id'] ?>">
-                        <?= htmlspecialchars($m['naam'] . ' ' . $m['achternaam']) ?>
+                        <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
                     </option>
                 <?php endforeach; ?>
             </select><br>
 
-            <select name="project_id" required>
+            <select name="project_id" class="smart-select" required>
                 <option value="">-- Selecteer project --</option>
                 <?php foreach ($allProjecten as $p): ?>
-                    <option value="<?= $p['project_id'] ?>"
-                        <?= ($filterProjectId === $p['project_id']) ? 'selected' : '' ?>>
+                    <option value="<?= $p['project_id'] ?>" <?= ($filterProjectId === $p['project_id']) ? 'selected' : '' ?>>
                         <?= htmlspecialchars($p['projectnaam']) ?>
                     </option>
                 <?php endforeach; ?>
             </select><br>
 
-            <input name="uren" type="number" min="0" max="24" step="0.25"
-                   placeholder="Uren (bijv. 7.5)" required><br>
+            <input name="uren" type="number" min="0" max="24" step="0.25" placeholder="Uren (bijv. 7.5)" required><br>
 
             <textarea name="omschrijving" placeholder="Omschrijving (optioneel)" rows="3"></textarea><br>
 
@@ -209,16 +230,16 @@ $totalUren = array_sum(array_column($data, 'uren'));
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="uren_id" id="edit_id">
 
-            <select name="medewerker_id" id="edit_medewerker_id" required>
+            <select name="medewerker_id" id="edit_medewerker_id" class="smart-select" required>
                 <option value="">-- Selecteer medewerker --</option>
                 <?php foreach ($allMedewerkers as $m): ?>
                     <option value="<?= $m['medewerker_id'] ?>">
-                        <?= htmlspecialchars($m['naam'] . ' ' . $m['achternaam']) ?>
+                        <?= htmlspecialchars($m['achternaam'] . ' ' . $m['naam']) ?>
                     </option>
                 <?php endforeach; ?>
             </select><br>
 
-            <select name="project_id" id="edit_project_id" required>
+            <select name="project_id" id="edit_project_id" class="smart-select" required>
                 <option value="">-- Selecteer project --</option>
                 <?php foreach ($allProjecten as $p): ?>
                     <option value="<?= $p['project_id'] ?>">
@@ -227,8 +248,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
                 <?php endforeach; ?>
             </select><br>
 
-            <input name="uren" id="edit_uren" type="number"
-                   min="0" max="24" step="0.25" required><br>
+            <input name="uren" id="edit_uren" type="number" min="0" max="24" step="0.25" required><br>
 
             <textarea name="omschrijving" id="edit_omschrijving" rows="3"></textarea><br>
 
@@ -237,22 +257,25 @@ $totalUren = array_sum(array_column($data, 'uren'));
         </form>
     </div>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document - </a> </p> </footer>
+    <footer class="index-footer">
+        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
+                document - </a> </p>
+    </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
     <script>
-        function openModal(id)  { document.getElementById(id).style.display = 'block'; }
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function edit(d) {
-            document.getElementById('edit_id').value             = d.uren_id;
-            document.getElementById('edit_medewerker_id').value  = d.medewerker_id;
-            document.getElementById('edit_project_id').value     = d.project_id;
-            document.getElementById('edit_uren').value           = d.uren;
-            document.getElementById('edit_omschrijving').value   = d.omschrijving || '';
+            document.getElementById('edit_id').value = d.uren_id;
+            document.getElementById('edit_medewerker_id').value = d.medewerker_id;
+            document.getElementById('edit_project_id').value = d.project_id;
+            document.getElementById('edit_uren').value = d.uren;
+            document.getElementById('edit_omschrijving').value = d.omschrijving || '';
             openModal('editModal');
         }
 
@@ -289,7 +312,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
                 startY: 27,
                 styles: { fontSize: 10 },
                 headStyles: { fillColor: [26, 26, 46] },
-                didParseCell: function(data) {
+                didParseCell: function (data) {
                     const lastRow = data.table.body.length - 1;
                     if (data.row.index === lastRow) {
                         data.cell.styles.fontStyle = 'bold';
@@ -298,6 +321,51 @@ $totalUren = array_sum(array_column($data, 'uren'));
             });
             doc.save('uren.pdf');
         }
+
+
+        function enableSmartSelect(select) {
+            let typed = '';
+            let timeout;
+
+            select.addEventListener('keydown', function (e) {
+
+                if (e.key.length === 1) {
+
+                    typed += e.key.toLowerCase();
+
+                    clearTimeout(timeout);
+
+                    timeout = setTimeout(() => {
+                        typed = '';
+                    }, 1000);
+
+                    let options = Array.from(select.options);
+
+                    options.sort((a, b) => {
+
+                        let aStarts = a.text.toLowerCase().startsWith(typed);
+                        let bStarts = b.text.toLowerCase().startsWith(typed);
+
+                        if (aStarts && !bStarts) return -1;
+                        if (!aStarts && bStarts) return 1;
+
+                        return a.text.localeCompare(b.text);
+                    });
+
+                    options.forEach(option => select.appendChild(option));
+
+                    let firstMatch = options.find(option =>
+                        option.text.toLowerCase().startsWith(typed)
+                    );
+
+                    if (firstMatch) {
+                        select.value = firstMatch.value;
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll('.smart-select').forEach(enableSmartSelect);
     </script>
 
 </body>

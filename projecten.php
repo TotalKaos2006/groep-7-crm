@@ -1,5 +1,17 @@
 <?php
+session_start();
 require_once 'db.php';
+
+if (empty($_SESSION['user_id'])) {
+    header('Location: auth/login.php');
+    exit;
+}
+
+if ($_SESSION['rol'] === 'medewerker') {
+    header('Location: uren.php');
+    exit;
+}
+
 
 $message = '';
 
@@ -97,6 +109,12 @@ $data = $stmt->fetchAll();
             <a href="uren.php">Uren</a>
             <a href="medewerkers.php">Medewerkers</a>
             <a href="klanten.php">Klanten</a>
+        </div>
+        <div class="user-info">
+            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            (<?= htmlspecialchars($_SESSION['rol']) ?>)
+            &nbsp;|&nbsp;
+            <a href="auth/logout.php">Uitloggen</a>
         </div>
     </header>
 
