@@ -93,10 +93,11 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #135f8b;
+    background: rgb(198, 198, 198);
     color: white;
     padding: 30px;
     width: 400px;
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
@@ -111,10 +112,21 @@ button {
 .modal input {
     width: 100%;
     box-sizing: border-box;
+    border: 2px solid rgb(0, 0, 0);
 }
 
 .modal button {
     width: 48%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    margin: 0 20px;
+    margin-left: 40px;
+    font-size: 16px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 12px;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .modal select {
@@ -125,7 +137,7 @@ button {
     background-color: white;
     color: black;
     font-size: 14px;
-    border: 2px solid #ccc;
+    border: 2px solid rgb(0, 0, 0);
 }
 
 .modal textarea {
@@ -134,10 +146,10 @@ button {
     padding: 10px;
     border-radius: 10px;
     background-color: white;
-    color: black;
+    color: rgb(0, 0, 0);
     font-size: 14px;
-    border: 2px solid #ccc;
     resize: none;
+    border: 2px solid rgb(0, 0, 0);
 }
 
 footer {
@@ -197,6 +209,7 @@ img {
     border-radius: 8px;
     border: 2px solid rgb(255, 153, 0);
 }
+
 .toevoegen {
     color: rgb(0, 0, 0);
     font-weight: bold;
@@ -220,6 +233,7 @@ tr {
     background-color: rgb(134, 134, 134);
     padding: 10px 15px;
     border-radius: 6px;
+    margin-left: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     color: rgb(255, 255, 255);
 }
