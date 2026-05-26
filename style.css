@@ -240,6 +240,7 @@ tr {
 
 .user-info a:hover {
     background-color: rgb(185, 185, 185);
+    color: rgb(0, 0, 0);
 }
 
 .navbar {
