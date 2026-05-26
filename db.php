@@ -1,8 +1,8 @@
 <?php
 $db_host = 'localhost';
-$db_name = 'c1klokker';
-$db_user = 'c1klokker';
-$db_pass = 'Groep7!!';
+$db_name = 'c4klokker';
+$db_user = 'root';
+$db_pass = '';
 
 try {
     $pdo = new PDO(
