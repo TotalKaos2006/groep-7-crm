@@ -97,7 +97,7 @@ $data = $stmt->fetchAll();
             <a href="klanten.php">Klanten</a>
         </div>
         <div class="user-info">
-            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            <?= htmlspecialchars($_SESSION['naam']) ?>
             (<?= htmlspecialchars($_SESSION['rol']) ?>)
             &nbsp;|&nbsp;
             <a href="auth/logout.php">Uitloggen</a>

@@ -111,7 +111,7 @@ $data = $stmt->fetchAll();
             <a href="klanten.php">Klanten</a>
         </div>
         <div class="user-info">
-            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            <?= htmlspecialchars($_SESSION['naam']) ?>
             (<?= htmlspecialchars($_SESSION['rol']) ?>)
             &nbsp;|&nbsp;
             <a href="auth/logout.php">Uitloggen</a>
@@ -221,7 +221,7 @@ $data = $stmt->fetchAll();
         </form>
     </div>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document - </a> </p> </footer>
+    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p> </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

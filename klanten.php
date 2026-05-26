@@ -86,7 +86,7 @@ $data = $stmt->fetchAll();
             <a class="nav-buttons active" href="#">Klanten</a>
         </div>
         <div class="user-info">
-            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            <?= htmlspecialchars($_SESSION['naam']) ?>
             (<?= htmlspecialchars($_SESSION['rol']) ?>)
             &nbsp;|&nbsp;
             <a href="auth/logout.php">Uitloggen</a>
@@ -169,8 +169,7 @@ $data = $stmt->fetchAll();
     </div>
 
     <footer class="index-footer">
-        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
-                document - </a> </p>
+        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p>
     </footer>
 
 

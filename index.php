@@ -29,7 +29,7 @@ if (empty($_SESSION['user_id'])) {
             <?php endif; ?>
         </div>
         <div class="user-info">
-            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            <?= htmlspecialchars($_SESSION['naam']) ?>
             (<?= htmlspecialchars($_SESSION['rol']) ?>)
             &nbsp;|&nbsp;
             <a href="auth/logout.php">Uitloggen</a>

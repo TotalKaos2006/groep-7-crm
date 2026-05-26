@@ -221,26 +221,12 @@ tr {
     padding: 10px 15px;
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-}
-
-.user-info strong {
     color: rgb(255, 255, 255);
 }
 
 .user-info a {
-    background-color: rgb(134, 134, 134);
     color: rgb(255, 255, 255);
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     text-decoration: none;
-    display: inline-block;
-}
-
-.user-info a:hover {
-    background-color: rgb(185, 185, 185);
-    color: rgb(0, 0, 0);
 }
 
 .navbar {

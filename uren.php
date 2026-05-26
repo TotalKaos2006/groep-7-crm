@@ -139,7 +139,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
             <?php endif; ?>
         </div>
         <div class="user-info">
-            <strong><?= htmlspecialchars($_SESSION['naam']) ?></strong>
+            <?= htmlspecialchars($_SESSION['naam']) ?>
             (<?= htmlspecialchars($_SESSION['rol']) ?>)
             &nbsp;|&nbsp;
             <a href="auth/logout.php">Uitloggen</a>
@@ -276,8 +276,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
     </div>
 
     <footer class="index-footer">
-        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
-                document - </a> </p>
+        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p>
     </footer>
 
 
