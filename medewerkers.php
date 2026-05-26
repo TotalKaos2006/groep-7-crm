@@ -193,8 +193,7 @@ $data = $stmt->fetchAll();
                 <option value="verkoop">Verkoop</option>
                 <option value="afdelingshoofd">Afdelingshoofd</option>
             </select><br>
-            <!-- Leeg laten = wachtwoord blijft hetzelfde -->
-            <input name="wachtwoord" id="edit_wachtwoord" type="password" placeholder="Nieuw wachtwoord (leeg = niet wijzigen)"><br>
+            <input name="wachtwoord" id="edit_wachtwoord" type="password" placeholder="Nieuw wachtwoord"><br>
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('editModal')">Sluiten</button>
         </form>
