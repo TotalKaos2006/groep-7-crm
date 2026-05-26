@@ -132,7 +132,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
                 <a href="projecten.php">Projecten</a>
             <?php endif; ?>
-            <a href="uren.php">Uren</a>
+            <a class="nav-buttons active" href="uren.php">Uren</a>
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
                 <a href="medewerkers.php">Medewerkers</a>
                 <a href="klanten.php">Klanten</a>

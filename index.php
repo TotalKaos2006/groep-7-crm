@@ -18,7 +18,7 @@ if (empty($_SESSION['user_id'])) {
 
     <header>
         <div class="nav-buttons">
-            <a href="index.php">Home</a>
+            <a class="nav-buttons active" href="index.php">Home</a>
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
                 <a href="projecten.php">Projecten</a>
             <?php endif; ?>
