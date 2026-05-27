@@ -87,8 +87,7 @@ $data = $stmt->fetchAll();
         </div>
         <div class="user-info">
             <?= htmlspecialchars($_SESSION['naam']) ?>
-            (<?= htmlspecialchars($_SESSION['rol']) ?>)
-            &nbsp;|&nbsp;
+            &nbsp;/&nbsp;
             <a href="auth/logout.php">Uitloggen</a>
         </div>
     </header>

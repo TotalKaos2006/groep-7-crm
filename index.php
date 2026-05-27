@@ -30,13 +30,12 @@ if (empty($_SESSION['user_id'])) {
         </div>
         <div class="user-info">
             <?= htmlspecialchars($_SESSION['naam']) ?>
-            (<?= htmlspecialchars($_SESSION['rol']) ?>)
-            &nbsp;|&nbsp;
+            &nbsp;/&nbsp;
             <a href="auth/logout.php">Uitloggen</a>
         </div>
     </header>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p> </footer>
+    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="" target="_blank">AVG document</a> </p> </footer>
 
 </body>
 
