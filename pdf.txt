@@ -1,0 +1,5 @@
+SELECT gu.uren, m.naam as medewerkernaam FROM `gewerkte_uren` as gu 
+JOIN medewerkers as m ON m.medewerker_id=gu.medewerker_id
+JOIN projecten ON projecten.project_id=gu.project_id
+JOIN klanten ON klanten.klant_id=projecten.klant_id
+WHERE projecten.project_id=2
