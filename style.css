@@ -272,6 +272,14 @@ tr {
     bottom: 0;
     width: 100%;
     }
+
+    .login-logo {
+    width: 300px;        
+    display: flex;
+    justify-content: left;
+    padding-top: 50px;
+    }
+
 /*
 .nav-buttons a {
     background-color: rgb(19, 95, 139);

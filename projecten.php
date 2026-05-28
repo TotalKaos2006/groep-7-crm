@@ -103,6 +103,9 @@ $data = $stmt->fetchAll();
 <body>
 
     <header>
+
+        <img src="Klokker.jpg" alt="Logo" class="login-logo">
+
         <div class="nav-buttons">
             <a href="index.php">Home</a>
             <a class="nav-buttons active" href="#">Projecten</a>

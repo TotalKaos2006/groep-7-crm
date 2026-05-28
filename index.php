@@ -17,6 +17,9 @@ if (empty($_SESSION['user_id'])) {
 <body>
 
     <header>
+
+        <img src="Klokker.jpg" alt="Logo" class="login-logo">
+
         <div class="nav-buttons">
             <a class="nav-buttons active" href="index.php">Home</a>
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
