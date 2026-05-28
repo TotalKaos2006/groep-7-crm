@@ -68,8 +68,8 @@ html {
     padding-right: 8px;
     background-color: rgb(190, 190, 190);
     border-radius: 12px;
-    border: 2px solid #000000;
-    color: black;
+    border: 2px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
 }
 
 table {
@@ -94,7 +94,7 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgb(198, 198, 198);
-    color: white;
+    color: rgb(255, 255, 255);
     padding: 30px;
     width: 400px;
     border: 2px solid rgb(0, 0, 0);
