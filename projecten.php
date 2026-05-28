@@ -25,26 +25,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'add') {
         $pdo->prepare(
-            "INSERT INTO projecten (klant_id, projectnaam, status, omschrijving)
-             VALUES (?, ?, ?, ?)"
+            "INSERT INTO projecten (klant_id, projectnaam, status, omschrijving, uurloon)
+             VALUES (?, ?, ?, ?, ?)"
         )->execute([
                     (int) $_POST['klant_id'],
                     trim($_POST['projectnaam']),
                     $_POST['status'],
                     trim($_POST['omschrijving'] ?? ''),
+                    (float) ($_POST['uurloon'] ?? 0),
                 ]);
     }
 
     if ($action === 'edit') {
         $pdo->prepare(
             "UPDATE projecten
-             SET klant_id=?, projectnaam=?, status=?, omschrijving=?
+             SET klant_id=?, projectnaam=?, status=?, omschrijving=?, uurloon=?
              WHERE project_id=?"
         )->execute([
                     (int) $_POST['klant_id'],
                     trim($_POST['projectnaam']),
                     $_POST['status'],
                     trim($_POST['omschrijving'] ?? ''),
+                    (float) ($_POST['uurloon'] ?? 0),
                     (int) $_POST['project_id'],
                 ]);
     }
@@ -79,7 +81,7 @@ if ($search) {
 $where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 $stmt = $pdo->prepare(
-    "SELECT p.project_id, p.projectnaam, p.status, p.omschrijving,
+    "SELECT p.project_id, p.projectnaam, p.status, p.omschrijving, p.uurloon,
             p.klant_id, CONCAT(k.naam, ' ', k.achternaam) AS klant_naam
      FROM projecten p
      JOIN klanten k ON p.klant_id = k.klant_id
@@ -140,6 +142,8 @@ $data = $stmt->fetchAll();
                 <th>Klant</th>
                 <th>Status</th>
                 <th>Omschrijving</th>
+                <th>uurloon</th>
+
                 <th>Acties</th>
             </tr>
 
@@ -150,6 +154,8 @@ $data = $stmt->fetchAll();
                     <td><?= htmlspecialchars($r['klant_naam']) ?></td>
                     <td><?= htmlspecialchars($r['status']) ?></td>
                     <td><?= htmlspecialchars($r['omschrijving']) ?></td>
+                    <td><?= htmlspecialchars($r['uurloon']) ?></td>
+
                     <td>
                         <button class="edit" onclick='edit(<?= json_encode($r) ?>)'>Edit</button>
                         <form method="post" style="display:inline" onsubmit="return confirm('Verwijderen?')">
@@ -188,6 +194,7 @@ $data = $stmt->fetchAll();
             </select><br>
 
             <textarea name="omschrijving" placeholder="Omschrijving (optioneel)" rows="3"></textarea><br>
+            <input name="uurloon" placeholder="Uurloon" type="number" min="0" max="100" step="0.01" required><br>
 
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('addModal')">Sluiten</button>
@@ -217,13 +224,17 @@ $data = $stmt->fetchAll();
             </select><br>
 
             <textarea name="omschrijving" id="edit_omschrijving" rows="3"></textarea><br>
+            <input name="uurloon" id="edit_uurloon" type="number" min="0" max="100" step="0.01" required><br>
 
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('editModal')">Sluiten</button>
         </form>
     </div>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p> </footer>
+    <footer class="index-footer">
+        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
+                document</a> </p>
+    </footer>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -239,6 +250,7 @@ $data = $stmt->fetchAll();
             document.getElementById('edit_klant_id').value = d.klant_id;
             document.getElementById('edit_status').value = d.status;
             document.getElementById('edit_omschrijving').value = d.omschrijving || '';
+            document.getElementById('edit_uurloon').value = d.uurloon || '';
             openModal('editModal');
         }
 
