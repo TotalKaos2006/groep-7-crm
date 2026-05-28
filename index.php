@@ -38,8 +38,11 @@ if (empty($_SESSION['user_id'])) {
         </div>
     </header>
 
-    <h1> <a class="nav-buttons" href="beheerprocedure_groep7.pdf" target="_blank">Beheerprocedure</a> </h1>
-    <h1> <a class="nav-buttons" href="avg_document_groep7.pdf" target="_blank">AVG document</a> </h1>
+        <div class="avg-buttons">
+        <a class="avg-buttons" href="beheerprocedure_groep7.pdf" target="_blank">Beheerprocedure groep 7</a> 
+        <a class="avg-buttons" href="avg_document_groep7.pdf" target="_blank">AVG document groep 7</a> 
+        <a class="avg-buttons" href="" target="_blank">Handleiding groep 7</a> 
+        </div>
 
     <footer class="index-footer"> <p> © 2026 </p> </footer>
 
