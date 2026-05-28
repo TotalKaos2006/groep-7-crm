@@ -191,7 +191,7 @@ $data = $stmt->fetchAll();
             </select><br>
 
             <textarea name="omschrijving" placeholder="Omschrijving (optioneel)" rows="3"></textarea><br>
-            <input name="uurloon" placeholder="Uurloon" id="edit_uurloon" type="number" min="0" max="100" step="0.01" required><br>
+            <input name="uurloon" placeholder="Uurloon" type="number" min="0" max="100" step="0.01" required><br>
 
             <button>Opslaan</button>
             <button type="button" onclick="closeModal('addModal')">Sluiten</button>
