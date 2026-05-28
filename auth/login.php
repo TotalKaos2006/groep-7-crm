@@ -45,18 +45,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="login-box">
-        <h2>Klokker CRM</h2>
         <?php if ($fout): ?>
             <p class="fout"><?= htmlspecialchars($fout) ?></p>
         <?php endif; ?>
         <form method="POST">
+
+            <img src="Klokker.jpg" alt="Logo" class="login-logo">
+
             <label for="email">E-mailadres</label>
             <input type="email" id="email" name="email" required autofocus placeholder="E-mail">
 
             <label for="wachtwoord">Wachtwoord</label>
-            <input type="password" id="wachtwoord" name="wachtwoord" required>
+            <input type="password" id="wachtwoord" name="wachtwoord" required autofocus placeholder="Wachtwoord">
 
-            <button type="submit">Inloggen</button>
+            <button type="submit">Login</button>
         </form>
     </div>
 </body>
