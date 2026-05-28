@@ -1,6 +1,10 @@
 <?php
 $db_host = 'localhost';
+<<<<<<< Updated upstream
 $db_name = 'c4klokker';
+=======
+$db_name = 'klokker';
+>>>>>>> Stashed changes
 $db_user = 'root';
 $db_pass = '';
 
