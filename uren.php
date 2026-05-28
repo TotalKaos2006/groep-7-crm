@@ -278,7 +278,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
     </div>
 
     <footer class="index-footer">
-        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG document</a> </p>
+        <p> © 2026 - <a class="nav-buttons" href="avg_document_groep7.pdf" target="_blank">AVG document</a> </p>
     </footer>
 
 
