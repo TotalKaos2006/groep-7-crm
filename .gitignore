@@ -2,5 +2,35 @@
 .DS_Store
 Thumbs.db
 
+# VS Code / IDE
+.vscode/
+
+# PHPStorm/JetBrains IDEs
+.idea/
+
+# Logs
+*.log
+
+
+# Environment / secrets
+#.env
+#config.local.php
+# ========================
+# Need to make
+# ========================
+
+
 # Database config
-db.php
+#db.php
+# ========================
+# Need to change
+
+
+# Uploaded files
+uploads/
+files/
+
+# Cache / temp
+cache/
+tmp/
+temp/
