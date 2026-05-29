@@ -86,7 +86,7 @@ $stmt = $pdo->prepare(
      FROM projecten p
      JOIN klanten k ON p.klant_id = k.klant_id
      {$where}
-     ORDER BY p.project_id"
+     ORDER BY p.project_id DESC"
 );
 $stmt->execute($params);
 

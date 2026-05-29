@@ -60,7 +60,7 @@ if ($search) {
     );
     $stmt->execute([$like, $like, $like, $like]);
 } else {
-    $stmt = $pdo->query("SELECT * FROM klanten ORDER BY klant_id");
+    $stmt = $pdo->query("SELECT * FROM klanten ORDER BY klant_id DESC");
 }
 
 $data = $stmt->fetchAll();
