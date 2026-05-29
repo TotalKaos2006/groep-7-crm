@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
@@ -127,6 +128,9 @@ $totalUren = array_sum(array_column($data, 'uren'));
 <body>
 
     <header>
+
+           <img src="Klokker.jpg" alt="Logo" class="login-logo">
+
         <div class="nav-buttons">
             <a href="index.php">Home</a>
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
@@ -273,8 +277,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
     </div>
 
     <footer class="index-footer">
-        <p> © 2026 - <a class="nav-buttons" href="../Miscellaneous/Privacyverklaring-Klokker.pdf" target="_blank">AVG
-                document</a> </p>
+        <p> © 2026 - <a class="nav-buttons" href="avg_document_groep7.pdf" target="_blank">AVG document</a> </p>
     </footer>
 
 

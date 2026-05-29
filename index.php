@@ -17,6 +17,9 @@ if (empty($_SESSION['user_id'])) {
 <body>
 
     <header>
+
+        <img src="Klokker.jpg" alt="Logo" class="login-logo">
+
         <div class="nav-buttons">
             <a class="nav-buttons active" href="index.php">Home</a>
             <?php if ($_SESSION['rol'] !== 'medewerker'): ?>
@@ -35,7 +38,13 @@ if (empty($_SESSION['user_id'])) {
         </div>
     </header>
 
-    <footer class="index-footer"> <p> © 2026 - <a class="nav-buttons" href="" target="_blank">AVG document</a> </p> </footer>
+        <div class="avg-buttons">
+        <a class="avg-buttons" href="beheerprocedure_groep7.pdf" target="_blank">Beheerprocedure groep 7</a> 
+        <a class="avg-buttons" href="avg_document_groep7.pdf" target="_blank">AVG document groep 7</a> 
+        <a class="avg-buttons" href="" target="_blank">Handleiding groep 7</a> 
+        </div>
+
+    <footer class="index-footer"> <p> © 2026 </p> </footer>
 
 </body>
 
