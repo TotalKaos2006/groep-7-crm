@@ -45,9 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="login-box">
-        <?php if ($fout): ?>
-            <p class="fout"><?= htmlspecialchars($fout) ?></p>
-        <?php endif; ?>
         <form method="POST">
 
             <img src="Klokker.jpg" alt="Logo" class="login-logo">
@@ -57,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="wachtwoord">Wachtwoord</label>
             <input type="password" id="wachtwoord" name="wachtwoord" required autofocus placeholder="Wachtwoord">
-
+<?php if ($fout): ?>
+            <p class="fout"><?= htmlspecialchars($fout) ?></p>
+        <?php endif; ?>
             <button type="submit">Login</button>
         </form>
     </div>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
