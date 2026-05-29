@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
@@ -8,10 +9,12 @@ if (empty($_SESSION['user_id'])) {
 }
 ?>
 <!DOCTYPE html>
-
+<html lang="nl">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UrenRegistratieSysteem</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
@@ -86,7 +87,7 @@ $stmt = $pdo->prepare(
      FROM projecten p
      JOIN klanten k ON p.klant_id = k.klant_id
      {$where}
-     ORDER BY p.project_id"
+     ORDER BY p.project_id DESC"
 );
 $stmt->execute($params);
 
@@ -94,10 +95,10 @@ $data = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projecten | Klokker</title>
     <link rel="stylesheet" href="style.css">
 </head>

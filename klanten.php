@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
@@ -60,17 +61,17 @@ if ($search) {
     );
     $stmt->execute([$like, $like, $like, $like]);
 } else {
-    $stmt = $pdo->query("SELECT * FROM klanten ORDER BY klant_id");
+    $stmt = $pdo->query("SELECT * FROM klanten ORDER BY klant_id DESC");
 }
 
 $data = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klanten | Klokker</title>
     <link rel="stylesheet" href="style.css">
 </head>

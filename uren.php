@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'auth/auth_check.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: auth/login.php');
@@ -116,10 +117,10 @@ $totalUren = array_sum(array_column($data, 'uren'));
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uren | Klokker</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -128,7 +129,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
 
     <header>
 
-           <img src="Klokker.jpg" alt="Logo" class="login-logo">
+        <img src="Klokker.jpg" alt="Logo" class="login-logo">
 
         <div class="nav-buttons">
             <a href="index.php">Home</a>
@@ -167,21 +168,19 @@ $totalUren = array_sum(array_column($data, 'uren'));
 
         <table id="mainTable">
             <tr>
-                <th>ID</th>
-                <th>Medewerker</th>
                 <th>Project</th>
-                <th>Uren</th>
+                <th>Medewerker</th>
                 <th>Omschrijving</th>
+                <th>Uren</th>
                 <th>Acties</th>
             </tr>
 
             <?php foreach ($data as $r): ?>
                 <tr>
-                    <td><?= $r['uren_id'] ?></td>
-                    <td><?= htmlspecialchars($r['medewerker_naam']) ?></td>
                     <td><?= htmlspecialchars($r['projectnaam']) ?></td>
-                    <td><?= number_format((float) $r['uren'], 2, ',', '.') ?></td>
+                    <td><?= htmlspecialchars($r['medewerker_naam']) ?></td>
                     <td><?= htmlspecialchars($r['omschrijving']) ?></td>
+                    <td><?= number_format((float) $r['uren'], 2, ',', '.') ?></td>
                     <td>
                         <button class="edit" onclick='edit(<?= json_encode($r) ?>)'>Edit</button>
                         <form method="post" style="display:inline" onsubmit="return confirm('Verwijderen?')">
@@ -327,7 +326,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
             rows.push(['', '', 'Totaal:', totaal.toFixed(1).replace('.', ','), '']);
 
             doc.autoTable({
-                head: [['ID', 'Medewerker', 'Project', 'Uren', 'Omschrijving']],
+                head: [['Project', 'Medewerker', 'Omschrijving', 'Uren']],
                 body: rows,
                 startY: 27,
                 styles: { fontSize: 10 },

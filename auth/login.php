@@ -33,21 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="nl">
-    <link rel="stylesheet" href="stylelogin.css">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-
-    </style>
+    <title>Login | UrenRegistratieSysteem</title>
+    <link rel="stylesheet" href="stylelogin.css">
 </head>
 
 <body>
     <div class="login-box">
-        <?php if ($fout): ?>
-            <p class="fout"><?= htmlspecialchars($fout) ?></p>
-        <?php endif; ?>
         <form method="POST">
 
             <img src="Klokker.jpg" alt="Logo" class="login-logo">
@@ -57,7 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="wachtwoord">Wachtwoord</label>
             <input type="password" id="wachtwoord" name="wachtwoord" required autofocus placeholder="Wachtwoord">
-
+<?php if ($fout): ?>
+            <p class="fout"><?= htmlspecialchars($fout) ?></p>
+        <?php endif; ?>
             <button type="submit">Login</button>
         </form>
     </div>
