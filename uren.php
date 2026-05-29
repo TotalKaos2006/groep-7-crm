@@ -116,10 +116,10 @@ $totalUren = array_sum(array_column($data, 'uren'));
 ?>
 
 <!DOCTYPE html>
-<html>
-
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uren | Klokker</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -128,7 +128,7 @@ $totalUren = array_sum(array_column($data, 'uren'));
 
     <header>
 
-           <img src="Klokker.jpg" alt="Logo" class="login-logo">
+        <img src="Klokker.jpg" alt="Logo" class="login-logo">
 
         <div class="nav-buttons">
             <a href="index.php">Home</a>
