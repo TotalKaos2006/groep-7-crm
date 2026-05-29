@@ -100,7 +100,7 @@ $data = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projecten | Klokker</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -164,8 +164,8 @@ $data = $stmt->fetchAll();
                             <input type="hidden" name="project_id" value="<?= $r['project_id'] ?>">
                             <button class="delete">Delete</button>
                         </form>
-                        <button class="uren"
-                            onclick="location.href='uren.php?project_id=<?= $r['project_id'] ?>'">Uren</button>
+                        <button class="uren" onclick="location.href='uren.php?project_id=<?= $r['project_id'] ?>'">Uren</button>
+                        <button class="factuur" onclick="exportPDF()">Factuur</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

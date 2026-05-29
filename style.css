@@ -237,6 +237,13 @@ img {
     margin-right: 50px;
 }
 
+.factuur {
+    color: rgb(128, 0, 128);
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid rgb(128, 0, 128);
+}
+
 .edit {
     color: rgb(0, 0, 255);
     font-weight: bold;
@@ -257,6 +264,7 @@ img {
     border-radius: 8px;
     border: 2px solid rgb(255, 153, 0);
 }
+
 
 .toevoegen {
     color: rgb(0, 0, 0);
@@ -314,19 +322,35 @@ tr {
     gap: 10px;
 }
 
-    .index-footer {
+.index-footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    }
+}
 
-    .login-logo {
+.login-logo {
     width: 300px;        
     display: flex;
     justify-content: left;
     padding-top: 50px;
-    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 .nav-buttons a {
