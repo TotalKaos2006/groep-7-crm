@@ -285,6 +285,11 @@ $data = $stmt->fetchAll();
             });
             doc.save('projecten.pdf');
         }
+
+        function exportPDF_factuur(){
+            
+            exportPDF();
+        }
     </script>
 
 </body>
