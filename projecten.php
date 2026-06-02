@@ -101,7 +101,7 @@ $data = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projecten | Klokker</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 
 <body>
@@ -284,6 +284,11 @@ $data = $stmt->fetchAll();
                 headStyles: { fillColor: [26, 26, 46] }
             });
             doc.save('projecten.pdf');
+        }
+
+        function exportPDF_factuur(){
+            
+            exportPDF();
         }
     </script>
 

@@ -33,6 +33,24 @@ h1 {
     padding-top: 50px;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(198, 198, 198);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.dropdown.hover .dropdown-content {
+    display: block;
+}
+
 .nav-buttons a {
     background-color: rgb(134, 134, 134);
     color: rgb(255, 255, 255);
@@ -237,6 +255,13 @@ img {
     margin-right: 50px;
 }
 
+.factuur {
+    color: rgb(128, 0, 128);
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid rgb(128, 0, 128);
+}
+
 .edit {
     color: rgb(0, 0, 255);
     font-weight: bold;
@@ -257,6 +282,7 @@ img {
     border-radius: 8px;
     border: 2px solid rgb(255, 153, 0);
 }
+
 
 .toevoegen {
     color: rgb(0, 0, 0);
@@ -314,19 +340,35 @@ tr {
     gap: 10px;
 }
 
-    .index-footer {
+.index-footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    }
+}
 
-    .login-logo {
+.login-logo {
     width: 300px;        
     display: flex;
     justify-content: left;
     padding-top: 50px;
-    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 .nav-buttons a {
