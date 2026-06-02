@@ -96,6 +96,7 @@ $data = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,8 +167,7 @@ $data = $stmt->fetchAll();
                         </form>
                         <button class="uren"
                             onclick="location.href='uren.php?project_id=<?= $r['project_id'] ?>'">Uren</button>
-                    </td>
-                </tr>
+<button class="uren" onclick="location.href='factuur.php?project_id=<?= $r['project_id'] ?>'">Factuur</button>                </tr>
             <?php endforeach; ?>
 
         </table>
