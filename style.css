@@ -1,145 +1,216 @@
+/* ─── CSS Variables ─── */
+:root {
+    --bg-gradient-start: rgb(83, 83, 83);
+    --bg-gradient-mid: rgb(143, 143, 143);
+    --bg-gradient-end: rgb(203, 203, 203);
+    --surface: rgb(190, 190, 190);
+    --surface-modal: rgb(198, 198, 198);
+    --btn-neutral: rgb(134, 134, 134);
+    --btn-neutral-hover: rgb(185, 185, 185);
+    --border: rgb(0, 0, 0);
+    --text: rgb(0, 0, 0);
+    --text-inv: rgb(255, 255, 255);
+}
+
+/* ─── Reset / Base ─── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    background: rgb(52, 180, 255);
-    color: rgb(0, 0, 0);
+    background-image: linear-gradient(var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+    color: var(--text);
     font-family: sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    background-image: linear-gradient(rgb(83, 83, 83),  rgb(143, 143, 143), rgb(203, 203, 203));
+    min-height: 100vh;
 }
 
+/* ─── Header ─── */
 header {
-    padding: 10px;
+    padding: 10px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: auto;           /* was fixed 100px — kapot op mobiel */
+    min-height: 80px;
+}
+
+/* ─── Logo ─── */
+.login-logo {
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    padding-top: 0;         /* was 50px — duwde header onnodig hoog */
+    margin: 0 10px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ─── Nav buttons (header) ─── */
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-buttons a {
+    background-color: var(--btn-neutral);
+    color: var(--text-inv);
+    padding: 10px 18px;
+    font-size: 15px;
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color .15s, color .15s;
+}
+
+.nav-buttons.active {
+    background-color: var(--btn-neutral-hover);
+    color: var(--text);
+}
+
+.nav-buttons a:hover,
+.nav-buttons a.active {
+    background-color: var(--btn-neutral-hover);
+    color: var(--text);
+}
+
+/* ─── User info ─── */
+.user-info {
+    background-color: var(--btn-neutral);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-left: 0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+    color: var(--text-inv);
+    white-space: nowrap;
     flex-shrink: 0;
-    height: 100px;
+}
+
+.user-info a {
+    color: var(--text-inv);
+    text-decoration: none;
+}
+
+/* ─── Typography ─── */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: var(--text);
+    padding-top: 50px;
 }
 
 p {
     text-align: center;
     font-size: 18px;
-    color: rgb(0, 0, 0);
-    padding-top: 0px;
-    color: rgb(0, 0, 0);
+    color: var(--text);
+    padding-top: 0;
 }
 
-h1 {
-    text-align: center;
-    font-size: 32px;
-    color: rgb(0, 0, 0);
-    padding-top: 50px;
+html {
+    scrollbar-color: rgb(78, 78, 78) transparent;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgb(198, 198, 198);
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
-    z-index: 1;
-}
-
-.dropdown.hover .dropdown-content {
-    display: block;
-}
-
-.nav-buttons a {
-    background-color: rgb(134, 134, 134);
-    color: rgb(255, 255, 255);
-    padding: 10px 20px;
-    margin: 0 20px;
-    margin-left: 40px;
-    font-size: 16px;
-    border-radius: 12px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
-    text-decoration: none;
-    display: inline-block;
-}
-
-.nav-buttons.active {
-    background-color: rgb(185, 185, 185);
-    color: rgb(0, 0, 0);
-}
-
-.nav-buttons a:hover {
-    background-color: rgb(185, 185, 185);
-    color: rgb(0, 0, 0);
-}
-
-.avg-buttons {
-    display: flex;
-    flex-direction: column;   
-    align-items: center;      
-    gap: 10px;                
-    margin-top: 20px;
-    padding-top: 100px;
-    padding-bottom: 25px;
-
-}
-
-.avg-buttons a {
-    background-color: rgb(134, 134, 134);
-    color: white;
-    padding: 10px 20px;
-    margin: 0 20px;
-    font-size: 16px;
-    border-radius: 12px;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.6);
-    text-decoration: none;
-    display: inline-block;
-}
-
-.avg-buttons.active {
-    background-color: rgb(185, 185, 185);
-    color: rgb(0, 0, 0);
-}
-
-.avg-buttons a:hover {
-    background-color: rgb(185, 185, 185);
-    color: rgb(0, 0, 0);
-}
-
-.navbar {
-    text-align: center;
-    margin: 20px;
-}
-
+/* ─── Inputs ─── */
 input {
     padding: 10px;
     border-radius: 10px;
 }
 
-html {
-  scrollbar-color: rgb(78, 78, 78) transparent;
+input[type="text"] {
+    background-color: rgb(185, 185, 185);
+    color: var(--text-inv);
+    padding: 10px 20px;
+    width: 300px;
+    max-width: 100%;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
+input[type="text"]:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    cursor: text;
+}
+
+input::placeholder {
+    color: var(--text);
+    opacity: 1;
+}
+
+/* ─── Navbar (zoek + actie) ─── */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.navbar-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+}
+
+.navbar-center form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.navbar-center input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+}
+
+.navbar-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ─── Container / tabel ─── */
 .container {
-    flex: 0,5;
-    min-height: 0;        /* cruciaal voor scrollen in flexbox */
+    flex: 1;                /* was 0.5 — pakte maar de helft van de ruimte */
     overflow-y: auto;
-    width: 80%;
-    margin: 16px auto;    
-    margin-bottom: 40px;
-    padding-bottom: 8px;
-    padding-top: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
-    background-color: rgb(190, 190, 190);
+    overflow-x: auto;
+    width: 90%;
+    margin: 16px auto 60px; /* ruimte voor vaste footer */
+    padding: 8px;
+    background-color: var(--surface);
     border-radius: 12px;
-    border: 2px solid rgb(0, 0, 0);
-    color: rgb(0, 0, 0);
+    border: 2px solid var(--border);
+    color: var(--text);
 }
 
 table {
     width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
 }
 
 td,
@@ -148,24 +219,51 @@ th {
     text-align: center;
 }
 
+tr {
+    border: 1px solid rgb(114, 114, 114);
+}
+
 button {
     padding: 6px 10px;
     margin: 2px;
+    cursor: pointer;
 }
 
+/* ─── Modal overlay ─── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+/* ─── Modal ─── */
 .modal {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgb(198, 198, 198);
-    color: rgb(255, 255, 255);
+    background: var(--surface-modal);
+    color: var(--text-inv);
     padding: 30px;
-    width: 400px;
-    border: 2px solid rgb(0, 0, 0);
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid var(--border);
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    z-index: 100;
+}
+
+.modal.active {
+    display: block;
 }
 
 .modal form {
@@ -177,19 +275,17 @@ button {
 
 .modal input {
     width: 100%;
-    box-sizing: border-box;
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid var(--border);
 }
 
 .modal button {
     width: 48%;
     background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
+    color: var(--text);
     padding: 10px 20px;
-    margin: 0 20px;
-    margin-left: 40px;
+    margin: 0 4px;
     font-size: 16px;
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid var(--border);
     border-radius: 12px;
     text-decoration: none;
     display: inline-block;
@@ -197,69 +293,32 @@ button {
 
 .modal select {
     width: 100%;
-    box-sizing: border-box;
     padding: 10px;
     border-radius: 10px;
     background-color: white;
     color: black;
     font-size: 14px;
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid var(--border);
 }
 
 .modal textarea {
     width: 100%;
-    box-sizing: border-box;
     padding: 10px;
     border-radius: 10px;
     background-color: white;
-    color: rgb(0, 0, 0);
+    color: var(--text);
     font-size: 14px;
     resize: none;
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid var(--border);
 }
 
-footer {
-    flex-shrink: 0;
-    height: 15px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-input[type="text"] {
-    background-color: rgb(185, 185, 185);
-    color: rgb(255, 255, 255);
-    padding: 10px 20px;
-    width: 300px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 2px solid rgb(0, 0, 0);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-}
-
-input[type="text"]:hover {
-    background-color: rgba(185, 185, 185);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    cursor: text;
-}
-
-input::placeholder {
-    color: rgb(0, 0, 0);
-    opacity: 1;
-}
-
-img {
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
+/* ─── Actie-knoppen ─── */
 .factuur {
     color: rgb(128, 0, 128);
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid rgb(128, 0, 128);
+    background: transparent;
 }
 
 .edit {
@@ -267,6 +326,7 @@ img {
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid rgb(0, 0, 255);
+    background: transparent;
 }
 
 .delete {
@@ -274,70 +334,89 @@ img {
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid rgb(255, 0, 0);
+    background: transparent;
 }
 
 .uren {
-    color:rgb(255, 153, 0);
+    color: rgb(255, 153, 0);
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid rgb(255, 153, 0);
+    background: transparent;
 }
 
-
 .toevoegen {
-    color: rgb(0, 0, 0);
+    color: var(--text);
     font-weight: bold;
     border-radius: 8px;
     height: 50px;
     width: 50px;
-    border: 2px solid rgb(0, 0, 0);
-    font-size: 20PX;
+    border: 2px solid var(--border);
+    font-size: 20px;
     text-align: center;
+    background: transparent;
 }
 
-table {
-    border-collapse: collapse;
+/* ─── Dropdown ─── */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-tr {
-    border: 1px solid rgb(114, 114, 114);
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(198, 198, 198);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    z-index: 1;
 }
 
-.user-info {
-    background-color: rgb(134, 134, 134);
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin-left: 40px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
-    color: rgb(255, 255, 255);
+.dropdown.hover .dropdown-content {
+    display: block;
 }
 
-.user-info a {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-}
-
-.navbar {
+/* ─── Avg buttons ─── */
+.avg-buttons {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    margin: 15px;
-}
-
-.navbar-left {
-    flex: 1;
-}
-
-.navbar-center {
-    flex: 1;
-    text-align: center;
-}
-
-.navbar-actions {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
     gap: 10px;
+    margin-top: 20px;
+    padding-top: 100px;
+    padding-bottom: 25px;
+}
+
+.avg-buttons a {
+    background-color: var(--btn-neutral);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.avg-buttons.active {
+    background-color: var(--btn-neutral-hover);
+    color: var(--text);
+}
+
+.avg-buttons a:hover {
+    background-color: var(--btn-neutral-hover);
+    color: var(--text);
+}
+
+/* ─── Footer ─── */
+footer {
+    flex-shrink: 0;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .index-footer {
@@ -345,48 +424,200 @@ tr {
     left: 0;
     bottom: 0;
     width: 100%;
-}
-
-.login-logo {
-    width: 300px;        
+    
+    backdrop-filter: blur(4px);
+    height: 40px;
     display: flex;
-    justify-content: left;
-    padding-top: 50px;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.nav-buttons a {
-    background-color: rgb(19, 95, 139);
-    color: white;
-    padding: 10px 20px;
-    margin: 0 20px;
-    margin-left: 40px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 2px solid rgb(250, 170, 0);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-    text-decoration: none;
-    display: inline-block;
+.index-footer p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-inv);
+    padding: 0;
 }
 
+.index-footer a {
+    color: black;
+}
 
-.nav-buttons a:hover {
-    background-color: rgb(25, 110, 160);
-    color: rgb(250, 170, 0);
+/* ═══════════════════════════════
+   RESPONSIVE — Tablet (≤ 768px)
+═══════════════════════════════ */
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 24px;
+        padding-top: 30px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    header {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .login-logo {
+        width: 180px;
+    }
+
+    .nav-buttons a {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+
+    .navbar {
+        margin: 10px;
+        gap: 8px;
+    }
+
+    .container {
+        width: 96%;
+    }
+
+    .modal {
+        padding: 20px;
+    }
+
+    .avg-buttons {
+        padding-top: 40px;
+    }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — Mobiel (≤ 480px)
+═══════════════════════════════ */
+@media (max-width: 480px) {
+
+    /* Header: alles gestapeld */
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 10px;
+        min-height: auto;
+        gap: 10px;
+    }
+
+    .login-logo {
+        width: 160px;
+        margin: 0 auto;
+    }
+
+    /* Nav-knoppen: gecentreerd, meerdere rijen */
+    .nav-buttons {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .nav-buttons a {
+        flex: 1 1 auto;
+        min-width: 75px;
+        max-width: 140px;
+        text-align: center;
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+
+    /* User-info: volledig breed */
+    .user-info {
+        width: 100%;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 20px;
+        padding-top: 16px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    /* Navbar: gestapeld */
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 8px;
+        gap: 8px;
+    }
+
+    .navbar-center {
+        justify-content: center;
+    }
+
+    .navbar-center form {
+        width: 100%;
+    }
+
+    .navbar-center input[type="text"] {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .navbar-actions {
+        justify-content: center;
+    }
+
+    /* Container: vol-breed, geen afgeronde zijkanten */
+    .container {
+        width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        margin: 8px 0 50px;
+    }
+
+    /* Tabel: compacter */
+    td,
+    th {
+        padding: 6px 4px;
+        font-size: 13px;
+    }
+
+    /* Actie-knoppen: onder elkaar per rij */
+    td .edit,
+    td .delete,
+    td .uren,
+    td .factuur {
+        display: block;
+        width: 100%;
+        margin: 2px 0;
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+
+    /* Modal: vol-breed, scrollbaar */
+    .modal {
+        width: 96%;
+        padding: 16px;
+        max-height: 88vh;
+        overflow-y: auto;
+    }
+
+    .modal button {
+        width: 100%;
+        margin: 4px 0;
+    }
+
+    /* Input: vol-breed */
+    input[type="text"] {
+        width: 100%;
+    }
+
+    /* Avg buttons */
+    .avg-buttons {
+        padding-top: 20px;
+    }
+
+    .avg-buttons a {
+        margin: 0;
+        width: 80%;
+        text-align: center;
+    }
 }
