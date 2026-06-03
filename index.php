@@ -21,7 +21,7 @@ if (empty($_SESSION['user_id'])) {
 
     <header>
 
-        <img src="Klokker.jpg" alt="Logo" class="login-logo">
+        <a href="index.php"><img src="Klokker.jpg" alt="Logo" class="login-logo"></a>
 
         <div class="nav-buttons">
             <a class="nav-buttons active" href="index.php">Home</a>
