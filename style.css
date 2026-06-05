@@ -436,7 +436,7 @@ footer {
 .index-footer p {
     margin: 0;
     font-size: 14px;
-    color: var(--text-inv);
+    color: rgb(0, 0, 0);    
     padding: 0;
 }
 
