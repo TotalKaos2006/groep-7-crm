@@ -48,6 +48,7 @@ if (empty($_SESSION['user_id'])) {
         </div>
 
     <footer class="index-footer"> <p> © 2026 </p> </footer>
+    
 
 </body>
 
